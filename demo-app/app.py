@@ -13,9 +13,13 @@ def home():
     cur.execute("SELECT msg FROM logs ORDER BY id DESC LIMIT 1")
     last_msg = cur.fetchone()[0]
     conn.close()
-    return f"Hello from Demo-App! Last DB record: {last_msg}"
+    return f"Demo-Uygulamasından Merhaba! Son DB kaydı: {last_msg}"
 
 @app.route("/metrics")
 def metrics():
     value = random.randint(1, 100)
-    return jsonify({"random_metric": value})
+    return jsonify({"rastgele_metrik": value})
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5001)
