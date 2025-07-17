@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: demo-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: demo-app
@@ -12,8 +12,18 @@ spec:
       labels:
         app: demo-app
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - demo-app
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - name: app
         image: demo-app:latest
         ports:
-        - containerPort: 5001
+        - containerPort: 5000
