@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-app
+  labels:
+    app: demo-app
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: demo-app
@@ -15,15 +16,19 @@ spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - demo-app
-            topologyKey: "kubernetes.io/hostname"
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - demo-app
+              topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: demo-app
-        image: localhost:5001/demo-app:latest
-        ports:
-        - containerPort: 5001
+        - name: demo-app
+          image: demo-app:latest
+          ports:
+            - containerPort: 5001
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
