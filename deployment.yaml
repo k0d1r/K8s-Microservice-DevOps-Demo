@@ -26,4 +26,4 @@ spec:
       - name: app
         image: demo-app:latest
         ports:
-        - containerPort: 5000
+        - containerPort: 5001
