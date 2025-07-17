@@ -18,7 +18,9 @@ def home():
 @app.route("/metrics")
 def metrics():
     value = random.randint(1, 100)
-    return jsonify({"rastgele_metrik": value})
+    return f"# HELP random_metric A randomly generated number.\n" \
+           f"# TYPE random_metric gauge\n" \
+           f"random_metric {value}\n", 200, {'Content-Type': 'text/plain; charset=utf-8'} 
 
 
 if __name__ == "__main__":
