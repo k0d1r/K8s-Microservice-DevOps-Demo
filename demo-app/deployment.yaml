@@ -23,7 +23,7 @@ spec:
                 - demo-app
             topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: app
+      - name: demo-app
         image: localhost:5001/demo-app:latest
         ports:
         - containerPort: 5001
