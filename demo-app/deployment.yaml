@@ -14,16 +14,6 @@ spec:
       labels:
         app: demo-app
     spec:
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - demo-app
-              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: demo-app
           image: demo-app:latest
