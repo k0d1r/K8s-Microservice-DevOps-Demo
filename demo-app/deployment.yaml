@@ -30,3 +30,10 @@ spec:
                 configMapKeyRef:
                   name: myappconfig-env
                   key: GREETING_MESSAGE
+          volumeMounts:
+            - name: demo-app-data
+              mountPath: /data
+      volumes:
+        - name: demo-app-data
+          persistentVolumeClaim:
+            claimName: demo-app-pvc
