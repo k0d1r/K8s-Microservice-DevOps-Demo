@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
 import sqlite3, random
+import os
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
+    greeting = os.environ.get("GREETING_MESSAGE", "Demo-Uygulamasından Merhaba!")
     conn = sqlite3.connect('/data/db.sqlite')
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY, msg TEXT)")
@@ -13,7 +15,7 @@ def home():
     cur.execute("SELECT msg FROM logs ORDER BY id DESC LIMIT 1")
     last_msg = cur.fetchone()[0]
     conn.close()
-    return f"Demo-Uygulamasından Merhaba! Son DB kaydı: {last_msg}"
+    return f"{greeting} Son DB kaydı: {last_msg}"
 
 @app.route("/metrics")
 def metrics():
