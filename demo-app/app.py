@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    conn = sqlite3.connect('db.sqlite')
+    conn = sqlite3.connect('/data/db.sqlite')
     cur = conn.cursor()
     cur.execute("CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY, msg TEXT)")
     cur.execute("INSERT INTO logs (msg) VALUES ('Demo data')")
