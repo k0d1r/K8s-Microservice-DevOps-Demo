@@ -1,0 +1,53 @@
+# Test Pod 1: Frontend label ile (İZİNLİ - backend'e erişebilmeli)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-frontend
+  labels:
+    role: frontend
+    app: test
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+---
+# Test Pod 2: Farklı label ile (ENGELLİ - backend'e erişememeli)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-unauthorized
+  labels:
+    role: unauthorized
+    app: test
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+---
+# Test Pod 3: Backend erişim testi için (ENGELLİ)
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-external
+  labels:
+    role: external
+    app: test
+spec:
+  containers:
+  - name: busybox
+    image: busybox:latest
+    command: ["sleep", "3600"]
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi" 
