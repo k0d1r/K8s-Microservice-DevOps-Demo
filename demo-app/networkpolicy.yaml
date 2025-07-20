@@ -8,7 +8,7 @@ spec:
   - Ingress
   - Egress
 ---
-# Frontend -> Backend
+# frontend -> backend
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -28,11 +28,11 @@ spec:
     - protocol: TCP
       port: 5001
 ---
-# Frontend -> DNS
+# dns
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-dns
+  name: allow-dns-egress
 spec:
   podSelector: {}
   policyTypes:
@@ -42,12 +42,14 @@ spec:
     ports:
     - protocol: UDP
       port: 53
+    - protocol: TCP
+      port: 53
 ---
 # Frontend -> Backend
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: frontend-egress-to-backend
+  name: allow-frontend-egress
 spec:
   podSelector:
     matchLabels:
@@ -65,4 +67,6 @@ spec:
   - to: []
     ports:
     - protocol: UDP
+      port: 53
+    - protocol: TCP
       port: 53
